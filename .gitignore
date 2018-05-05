@@ -1,3 +1,7 @@
 *.jl.cov
 *.jl.*.cov
 *.jl.mem
+<<<<<<< HEAD
+=======
+deps/deps.jl
+>>>>>>> origin/master
