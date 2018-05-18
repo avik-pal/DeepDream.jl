@@ -19,8 +19,8 @@
 
 ## TODO
 
--[ ] Implement Octaves and Test Proper Functioning
--[ ] Implement Guided Dreams
--[ ] Add automatic detection of images and perform deepdream on them
--[ ] Add some generated dreams to the examples directory
--[ ] Provide standard functions with predefined set of parameters
+* Implement Octaves and Test Proper Functioning
+* Implement Guided Dreams
+* Add automatic detection of images and perform deepdream on them
+* Add some generated dreams to the examples directory
+* Provide standard functions with predefined set of parameters
