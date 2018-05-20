@@ -1,8 +1,8 @@
 # -------------------- Loading and Saving Image Utilities --------------------
 
-function load_image(path, on_cpu=true)
+function load_image(path)
     img = load(path)
-    image_to_arr(img, on_cpu)
+    image_to_arr(img)
 end
 
 function generate_image(x)
@@ -15,13 +15,9 @@ function save_image(path, x::Array)
     save(path, generate_image(x))
 end
 
-function image_to_arr(img, on_cpu = true; preprocess = true)
+function image_to_arr(img; preprocess = true)
     local x = img
-    if(on_cpu)
-        x = float64.(channelview(img))
-    else
-        x = float.(channelview(img))
-    end
+    x = float.(channelview(img))
     x = permutedims(x, [3,2,1])
     if(preprocess)
         local mean = [0.485, 0.456, 0.406]
