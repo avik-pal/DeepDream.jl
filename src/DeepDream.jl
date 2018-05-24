@@ -1,13 +1,9 @@
 module DeepDream
 
 using Flux, Metalhead, Images, FileIO
-try
-    using CuArrays
-catch
-    warn("No GPU Support Available for your machine. Computation time shall be severely affected.")
-end
+using CuArrays
 
-export load_image, generate_image, save_image, load_model, deepdream
+export load_image, generate_image, save_image, load_model, deepdream, dream
 
 include("utils.jl")
 include("dream.jl")

@@ -1,9 +1,16 @@
 # DeepDream
 
-**NOTE : This package is under Development. However, individual functions can still be used to create cool dreams**
-
 **NOTE : If there is no GPU support available please checkout the cpu
 branch of this repo**
+
+## USAGE INSTRUCTIONS
+
+
+
+## SOME EXAMPLES
+|Original Image|Generated Image|
+|:---:|:---:|
+|![Sky](./examples/sky.jpg)|![Deepdream on Sky](./examples/sky_dream.jpg)|
 
 ## DEPENDENCIES
 
@@ -19,11 +26,15 @@ branch of this repo**
     * Zoom
 3. Utilities to load models
 4. Deep Dream Generator (non-guided)
+5. Generate deep dreams using Octaves
 
 ## TODO
 
-* Implement Octaves and Test Proper Functioning
 * Implement Guided Dreams
 * Add automatic detection of images and perform deepdream on them
-* Add some generated dreams to the examples directory
 * Provide standard functions with predefined set of parameters
+
+## CURRENT BOTTLENECKS
+
+* The image zoom is performed in CPU as the present implementation is
+    too slow for GPUs. So it can be quite slow
