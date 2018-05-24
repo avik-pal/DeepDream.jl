@@ -37,8 +37,8 @@ function zoom_image(x, scale_x, scale_y)
     inv_scalex = 1 / scale_x
     inv_scaley = 1 / scale_y
     local s = size(img)
-    local r1 = Int(ceil(s[1] * (1 - inv_scalex) / 2)) : Int(ceil(s[1] * (1 + inv_scalex) / 2))
-    local r2 = Int(ceil(s[2] * (1 - inv_scaley) / 2)) : Int(ceil(s[2] * (1 + inv_scaley) / 2))
+    local r1 = clamp(Int(ceil(s[1] * (1 - inv_scalex) / 2)), 1, s[1]) : clamp(Int(ceil(s[1] * (1 + inv_scalex) / 2)), 1, s[1])
+    local r2 = clamp(Int(ceil(s[2] * (1 - inv_scaley) / 2)), 1, s[2]) : clamp(Int(ceil(s[2] * (1 + inv_scaley) / 2)), 1, s[2])
     img = imresize(img[r1, r2], s)
     image_to_arr(img)
 end
