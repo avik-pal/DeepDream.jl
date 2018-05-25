@@ -37,6 +37,16 @@ Also be sure to checkout the [function definition](https://github.com/avik-pal/D
    to pass a function to `load_model()` which returns the model you want
    to use
 
+7. To generate guided dreams run the following code.
+```julia
+julia> img = load_image("./examples/sky.jpg")
+julia> guide = load_guide_image("./examples/rio.jpg")
+julia> load_model(5)
+julia> deepdream(img, 10, 1.5, 1.4, 4, "./examples/sky_dream_guided_new.jpg", guided = true)
+```
+The `guided_step` function might be used independently like the
+`make_step` function.
+
 ## SOME EXAMPLES
 |Original Image|Generated Image|
 |:---:|:---:|
@@ -61,10 +71,10 @@ Also be sure to checkout the [function definition](https://github.com/avik-pal/D
 3. Utilities to load models
 4. Deep Dream Generator (non-guided)
 5. Generate deep dreams using Octaves
+6. Guided Deep Dreams
 
 ## TODO
 
-* Implement Guided Dreams
 * Add automatic detection of images and perform deepdream on them
 * Provide standard functions with predefined set of parameters
 
@@ -72,3 +82,5 @@ Also be sure to checkout the [function definition](https://github.com/avik-pal/D
 
 * The image zoom is performed in CPU as the present implementation is
     too slow for GPUs. So it can be quite slow
+* The guided image dreaming is quite slow due to a lot of indexing
+    operations
