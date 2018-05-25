@@ -43,6 +43,7 @@ Also be sure to checkout the [function definition](https://github.com/avik-pal/D
 |![Sky](./examples/sky.jpg)|![Deepdream on Sky](./examples/sky_dream.jpg)|
 |![Game](./examples/game.jpg)|![Deepdream on Game](./examples/game_dream.jpg)|
 |![Rio](./examples/rio.jpg)|![Deepdream on Rio](./examples/rio_dream.jpg)|
+|![Rio](./examples/rio.jpg)|![Deepdream on Rio](./examples/rio_dream_2.jpg)|
 |![Statue of Liberty](./examples/liberty.jpg)|![Deepdream on Statue of Liberty](./examples/liberty_dream.jpg)|
 
 ## DEPENDENCIES
