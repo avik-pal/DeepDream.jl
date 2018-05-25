@@ -5,6 +5,11 @@ function load_image(path)
     image_to_arr(img)
 end
 
+function load_guide_image(path)
+    img = load(path)
+    image_to_arr(imresize(img, (224,224)))
+end
+
 function generate_image(x)
     x = reshape(x, size(x,1), size(x,2), size(x,3))
     x = clamp.(permutedims(x, [3,2,1]), 0, 255) / 255
@@ -48,4 +53,12 @@ end
 function load_model(layer, m = VGG19)
     model = m()
     global model = Chain(model.layers[1:layer]...) |> gpu
+end
+
+# ---------------- Utilities for Calculations on Matrices -------------------
+
+function argmax(x, dims)
+    z = findmax(x, dims) .% size(x, dims)
+    z[z.==0] = size(x, dims)
+    z
 end
