@@ -59,6 +59,7 @@ The `guided_step` function might be used independently like the
 |Original Image|Guiding Image|Generated Image|
 |:---:|:---:|:---:|
 |![Sky](./examples/sky.jpg)|![Flowers](./examples/flowers.jpg)|![Sky Dream guided by Flower](./examples/sky_guided_flower.jpg)|
+|![Sky](./examples/sky.jpg)|![Flowers](./examples/flowers.jpg)|![Sky Dream guided by Flower](./examples/sky_guided_flower_2.jpg)|
 
 ## DEPENDENCIES
 
