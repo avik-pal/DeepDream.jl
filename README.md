@@ -56,6 +56,10 @@ The `guided_step` function might be used independently like the
 |![Rio](./examples/rio.jpg)|![Deepdream on Rio](./examples/rio_dream_2.jpg)|
 |![Statue of Liberty](./examples/liberty.jpg)|![Deepdream on Statue of Liberty](./examples/liberty_dream.jpg)|
 
+|Original Image|Guiding Image|Generated Image|
+|:---:|:---:|:---:|
+|![Sky](./examples/sky.jpg)|![Flowers](./examples/flowers.jpg)|![Sky Dream guided by Flower](./examples/sky_guided_flower.jpg)|
+
 ## DEPENDENCIES
 
 1. Flux.jl
