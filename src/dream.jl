@@ -23,7 +23,7 @@ function make_step(img, iterations, η, solo_call = false; path = "")
     return input.data
 end
 
-function deepdream(base_img, iterations, η, octave_scale, num_octaves, path; guide = false)
+function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, guide = 1.0; guided = false)
     octaves = [copy(base_img)]
     for i in 1:(num_octaves-1)
         push!(octaves, zoom_image(octaves[end], octave_scale, octave_scale))
@@ -38,7 +38,7 @@ function deepdream(base_img, iterations, η, octave_scale, num_octaves, path; gu
         end
         input_oct = (oct + detail) |> gpu
         if(guided)
-            out = guided_step(input_oct, iterations, η)
+            out = guided_step(input_oct, guide, iterations, η)
         else
             out = make_step(input_oct, iterations, η)
         end

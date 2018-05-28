@@ -62,3 +62,20 @@ function argmax(x, dims)
     z[z.==0] = size(x, dims)
     z
 end
+
+#-----------------Utilities to apply Deepdream on a Batch--------------------
+
+function dream_batch(depth, iterations, η, octave_scale, num_octaves, guide = 1.0; guided = false)
+    if(guide==1.0 && guided)
+        error("Guide Image not entered")
+    end
+    path = "../images/"
+    images = [joinpath(path, i) for i in readdir(path)]
+    load_model(depth)
+    for i in images
+        save_path = *((split(i, ".")[1:end-1])...) * "_dream.jpg"
+        deepdream(load_image(i), iterations, η, octave_scale, num_octaves, save_path, guide, guided)
+        info("Image saved at $(save_path)")
+    end
+end
+

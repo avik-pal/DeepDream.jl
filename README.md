@@ -47,6 +47,10 @@ julia> deepdream(img, 10, 1.5, 1.4, 4, "./examples/sky_dream_guided_new.jpg", gu
 The `guided_step` function might be used independently like the
 `make_step` function.
 
+8. Even easier method is to place all your images in a `./images`
+   directory and call the function `dream_batch` function. Send a
+   guiding image if necessary.
+
 ## SOME EXAMPLES
 |Original Image|Generated Image|
 |:---:|:---:|
@@ -77,11 +81,6 @@ The `guided_step` function might be used independently like the
 4. Deep Dream Generator (non-guided)
 5. Generate deep dreams using Octaves
 6. Guided Deep Dreams
-
-## TODO
-
-* Add automatic detection of images and perform deepdream on them
-* Provide standard functions with predefined set of parameters
 
 ## CURRENT BOTTLENECKS
 
