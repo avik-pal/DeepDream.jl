@@ -20,16 +20,15 @@ function save_image(path, x::Array)
     save(path, generate_image(x))
 end
 
+im_mean = reshape([0.485, 0.456, 0.406], 3, 1, 1)
+im_std = reshape([0.229, 0.224, 0.225], 3, 1, 1)
+
 function image_to_arr(img; preprocess = true)
     local x = img
     x = float.(channelview(img))
     x = permutedims(x, [3,2,1])
     if(preprocess)
-        local mean = [0.485, 0.456, 0.406]
-        local std = [0.229, 0.224, 0.225]
-        for i in 1:3
-            x[i,:,:] = (x[i,:,:] - mean[i])/std[i]
-        end
+        x = (x .- im_mean)./im_std
     end
     x = reshape(x, size(x,1), size(x,2), size(x,3), 1)
     x = (x * 255) |> gpu
