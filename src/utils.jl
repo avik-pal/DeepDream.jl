@@ -31,7 +31,7 @@ end
 
 function image_to_arr(img; preprocess = true)
     local x = img
-    x = float.(channelview(img))
+    x = Float32.(channelview(img))
     x = permutedims(x, [3,2,1])
     if(preprocess)
         x = (x .- im_mean)./im_std
