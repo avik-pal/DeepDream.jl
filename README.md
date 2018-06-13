@@ -1,7 +1,6 @@
 # DeepDream
 
-**NOTE : If there is no GPU support available please checkout the cpu
-branch of this repo. The cpu code is not thoroughly tested.**
+**NOTE : This version is meant to be run on CPU.**
 
 ## INSTALLATION INSTRUCTIONS
 
