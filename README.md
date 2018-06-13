@@ -71,10 +71,3 @@ The `guided_step` function might be used independently like the
 4. Deep Dream Generator (non-guided)
 5. Generate deep dreams using Octaves
 6. Guided Deep Dreams
-
-## CURRENT BOTTLENECKS
-
-* The image zoom is performed in CPU as the present implementation is
-    too slow for GPUs. So it can be quite slow
-* The guided image dreaming is quite slow due to a lot of indexing
-    operations
