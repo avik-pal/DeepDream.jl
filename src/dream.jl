@@ -8,8 +8,8 @@ function make_step(img, iterations, η, solo_call = false; path = "")
     for i in 1:iterations
         out = model(input)
         Flux.back!(out, out.data)
-        info("$i iterations complete")
         input.data .= input.data + η * input.grad / mean(abs.(input.grad))
+        info("$i iterations complete")
     end
     if(solo_call)
         save_image(path, input.data)
@@ -17,7 +17,7 @@ function make_step(img, iterations, η, solo_call = false; path = "")
     return input.data
 end
 
-function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, guide = 1.0; guided = false)
+function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, guide = 1.0)
     octaves = [copy(base_img)]
     for i in 1:(num_octaves-1)
         push!(octaves, zoom_image(octaves[end], octave_scale, octave_scale))
@@ -32,7 +32,7 @@ function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, gu
             detail = zoom_image(detail, w1 / w, h1 / h)
         end
         input_oct = (oct + detail) |> gpu
-        if(guided)
+        if(guide != 1.0)
             out = guided_step(input_oct, guide, iterations, η)
         else
             out = make_step(input_oct, iterations, η)
@@ -47,18 +47,19 @@ function guided_step(img, guide, iterations, η, solo_call = false; path = "")
         error("Image Save Path must be specified for solo calls")
     end
     input = param(img)
+    out = model(input)
+    guide_features = model(guide)
+    ch = size(out.data, 3)
+    y = reshape(guide_features, :, ch)
     for i in 1:iterations
-        guide_features = model(guide)
         out = model(input)
-        ch = size(out.data, 3)
         x = reshape(out.data , :, ch)
-        y = reshape(guide_features, :, ch)
         dot_prod = (x * y') |> cpu
         result = y[argmax(dot_prod, 2), :]
         result = reshape(result, size(out.data))
-        @show mean(result)
         Flux.back!(out, result)
         input.data .= input.data + η * input.grad / mean(abs.(input.grad))
+        info("$i iterations complete")
     end
     if(solo_call)
         save_image(path, input.data)

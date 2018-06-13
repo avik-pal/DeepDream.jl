@@ -1,0 +1,5 @@
+julia 0.6.0
+Flux
+CuArrays
+Images
+Metalhead

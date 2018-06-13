@@ -20,7 +20,7 @@ include("src/DeepDream.jl")
 ```julia
 julia> img = load_image("./examples/sky.jpg")
 julia> load_model(5)
-julia> DeepDream.make_step(img, 10, 1.5, true, "./examples/sky_dream_new.jpg")
+julia> DeepDream.make_step(img, 10, 0.005, true, "./examples/sky_dream_new.jpg")
 ```
 Make sure to pass all the arguments to the make_step function call to
 avoid errors. Refer to the [function definition](https://github.com/avik-pal/DeepDream.jl/blob/11ef038ec6333114e521c6d6b422a4831c6bb0c8/src/dream.jl#L5) to understand what each parameter means.
@@ -29,7 +29,7 @@ avoid errors. Refer to the [function definition](https://github.com/avik-pal/Dee
 ```julia
 julia> img = load_image("./examples/sky.jpg")
 julia> load_model(5)
-julia> deepdream(img, 10, 1.5, 1.4, 4, "./examples/sky_dream_new.jpg")
+julia> deepdream(img, 10, 0.005, 1.4, 4, "./examples/sky_dream_new.jpg")
 ```
 Also be sure to checkout the [function definition](https://github.com/avik-pal/DeepDream.jl/blob/11ef038ec6333114e521c6d6b422a4831c6bb0c8/src/dream.jl#L27)
 
@@ -42,7 +42,7 @@ Also be sure to checkout the [function definition](https://github.com/avik-pal/D
 julia> img = load_image("./examples/sky.jpg")
 julia> guide = load_guide_image("./examples/rio.jpg")
 julia> load_model(5)
-julia> deepdream(img, 10, 1.5, 1.4, 4, "./examples/sky_dream_guided_new.jpg", guided = true)
+julia> deepdream(img, 10, 0.005, 1.4, 4, "./examples/sky_dream_guided_new.jpg", guided = true)
 ```
 The `guided_step` function might be used independently like the
 `make_step` function.
@@ -64,13 +64,6 @@ The `guided_step` function might be used independently like the
 |:---:|:---:|:---:|
 |![Sky](./examples/sky.jpg)|![Flowers](./examples/flowers.jpg)|![Sky Dream guided by Flower](./examples/sky_guided_flower.jpg)|
 |![Sky](./examples/sky.jpg)|![Flowers](./examples/flowers.jpg)|![Sky Dream guided by Flower](./examples/sky_guided_flower_2.jpg)|
-
-## DEPENDENCIES
-
-1. Flux.jl
-2. Metalhead.jl
-3. Images.jl
-4. CuArrays.jl
 
 ## IMPLEMENTED
 
