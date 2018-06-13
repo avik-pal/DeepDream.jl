@@ -12,8 +12,7 @@ function make_step(img, iterations, η, solo_call = false; path = "")
         input.data .= input.data + η * input.grad / mean(abs.(input.grad))
     end
     if(solo_call)
-        save_img = input_data |> cpu
-        save_image(path, save_img)
+        save_image(path, input.data)
     end
     return input.data
 end
@@ -26,6 +25,7 @@ function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, gu
     detail = zeros(octaves[end])
     out = base_img
     for (i, oct) in enumerate(octaves[length(octaves):-1:1])
+        info("OCTAVE NUMBER = $i")
         w, h = size(oct)[1:2]
         if(i > 1)
             w1, h1 = size(detail)[1:2]
@@ -39,7 +39,6 @@ function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, gu
         end
         detail = out - oct
     end
-    out = out |> cpu
     save_image(path, out)
 end
 

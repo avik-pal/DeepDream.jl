@@ -15,15 +15,19 @@ function load_guide_image(path)
     image_to_arr(imresize(img, (224,224)))
 end
 
-function generate_image(x)
+function generate_image(x, resize_original = false)
     x = reshape(x, size(x)[1:3]...)
     x = x .* im_std .+ im_mean
     x = clamp.(permutedims(x, [3,2,1]), 0, 1) |> cpu
-    imresize(colorview(RGB, x), original_size)
+    if resize_original
+        imresize(colorview(RGB, x), original_size)
+    else
+        colorview(RGB, x)
+    end
 end
 
 function save_image(path, x)
-    save(path, generate_image(x))
+    save(path, generate_image(x, true))
 end
 
 function image_to_arr(img; preprocess = true)
