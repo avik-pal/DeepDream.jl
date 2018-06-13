@@ -7,7 +7,7 @@ branch of this repo. The cpu code is not thoroughly tested.**
 
 Run this command in the `Julia REPL`
 ```julia
-$ Pkg.clone("https://github.com/avik-pal/DeepDream.jl.git")
+julia> Pkg.clone("https://github.com/avik-pal/DeepDream.jl.git")
 ```
 
 ## USAGE INSTRUCTIONS
