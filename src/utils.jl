@@ -1,7 +1,12 @@
 # -------------------- Loading and Saving Image Utilities --------------------
 
+im_mean = reshape([0.485, 0.456, 0.406], 1, 1, 3) |> gpu
+im_std = reshape([0.229, 0.224, 0.225], 1, 1, 3) |> gpu
+
 function load_image(path)
     img = load(path)
+    global original_size = size(img)
+    img = imresize(img, (224,224))
     image_to_arr(img)
 end
 
@@ -11,27 +16,24 @@ function load_guide_image(path)
 end
 
 function generate_image(x)
-    x = reshape(x, size(x,1), size(x,2), size(x,3))
-    x = clamp.(permutedims(x, [3,2,1]), 0, 255) / 255
-    colorview(RGB, x)
+    x = reshape(x, size(x)[1:3]...)
+    x = x .* im_std .+ im_mean
+    x = clamp.(permutedims(x, [3,2,1]), 0, 1)
+    imresize(colorview(RGB, x), original_size)
 end
 
-function save_image(path, x::Array)
+function save_image(path, x)
     save(path, generate_image(x))
 end
-
-im_mean = reshape([0.485, 0.456, 0.406], 3, 1, 1)
-im_std = reshape([0.229, 0.224, 0.225], 3, 1, 1)
 
 function image_to_arr(img; preprocess = true)
     local x = img
     x = float.(channelview(img))
-    x = permutedims(x, [3,2,1])
+    x = permutedims(x, [3,2,1]) |> gpu
     if(preprocess)
         x = (x .- im_mean)./im_std
     end
     x = reshape(x, size(x,1), size(x,2), size(x,3), 1)
-    x = (x * 255) |> gpu
 end
 
 # -------------------- Utilities to modify Images --------------------
