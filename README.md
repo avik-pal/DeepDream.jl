@@ -3,19 +3,16 @@
 **NOTE : If there is no GPU support available please checkout the cpu
 branch of this repo. The cpu code is not thoroughly tested.**
 
-## USAGE INSTRUCTIONS
+## INSTALLATION INSTRUCTIONS
 
-1. Clone the Repository
-`git clone https://github.com/avik-pal/DeepDream.jl.git DeepDream`
-
-2. Move into the directory and run julia
-
-3. Include the file in julia
+Run this command in the `Julia REPL`
 ```julia
-include("src/DeepDream.jl")
+$ Pkg.clone("https://github.com/avik-pal/DeepDream.jl.git")
 ```
 
-4. Inorder to generate dreams without using octaves run the following
+## USAGE INSTRUCTIONS
+
+1. Inorder to generate dreams without using octaves run the following
    command with your own parameters
 ```julia
 julia> img = load_image("./examples/sky.jpg")
@@ -25,7 +22,7 @@ julia> DeepDream.make_step(img, 10, 0.005, true, "./examples/sky_dream_new.jpg")
 Make sure to pass all the arguments to the make_step function call to
 avoid errors. Refer to the [function definition](https://github.com/avik-pal/DeepDream.jl/blob/11ef038ec6333114e521c6d6b422a4831c6bb0c8/src/dream.jl#L5) to understand what each parameter means.
 
-5. To make use of octaves run the following commands
+2. To make use of octaves run the following commands
 ```julia
 julia> img = load_image("./examples/sky.jpg")
 julia> load_model(5)
@@ -33,11 +30,11 @@ julia> deepdream(img, 10, 0.005, 1.4, 4, "./examples/sky_dream_new.jpg")
 ```
 Also be sure to checkout the [function definition](https://github.com/avik-pal/DeepDream.jl/blob/11ef038ec6333114e521c6d6b422a4831c6bb0c8/src/dream.jl#L27)
 
-6. Incase you want to use any other model than the VGG19 model make sure
+3. Incase you want to use any other model than the VGG19 model make sure
    to pass a function to `load_model()` which returns the model you want
    to use
 
-7. To generate guided dreams run the following code.
+4. To generate guided dreams run the following code.
 ```julia
 julia> img = load_image("./examples/sky.jpg")
 julia> guide = load_guide_image("./examples/rio.jpg")
@@ -47,7 +44,7 @@ julia> deepdream(img, 10, 0.005, 1.4, 4, "./examples/sky_dream_guided_new.jpg", 
 The `guided_step` function might be used independently like the
 `make_step` function.
 
-8. Even easier method is to place all your images in a `./images`
+5. Even easier method is to place all your images in a `./images`
    directory and call the function `dream_batch` function. Send a
    guiding image if necessary.
 
