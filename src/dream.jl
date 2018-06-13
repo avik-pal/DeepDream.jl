@@ -31,7 +31,7 @@ function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, gu
             w1, h1 = size(detail)[1:2]
             detail = zoom_image(detail, w1 / w, h1 / h)
         end
-        input_oct = (oct + detail) |> gpu
+        input_oct = (oct + detail)
         if(guide != 1.0)
             out = guided_step(input_oct, guide, iterations, η)
         else
@@ -54,7 +54,7 @@ function guided_step(img, guide, iterations, η, solo_call = false; path = "")
     for i in 1:iterations
         out = model(input)
         x = reshape(out.data , :, ch)
-        dot_prod = (x * y') |> cpu
+        dot_prod = (x * y')
         result = y[argmax(dot_prod, 2), :]
         result = reshape(result, size(out.data))
         Flux.back!(out, result)
