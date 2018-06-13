@@ -58,12 +58,10 @@ function guided_step(img, guide, iterations, η, solo_call = false; path = "")
         result = reshape(result, size(out.data))
         @show mean(result)
         Flux.back!(out, result)
-        local grad = input.grad
-        input.data .= input.data + η * grad / mean(abs.(grad))
+        input.data .= input.data + η * input.grad / mean(abs.(input.grad))
     end
     if(solo_call)
-        save_img = input_data |> cpu
-        save_image(path, save_img)
+        save_image(path, input.data)
     end
     return input.data
 end

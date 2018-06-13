@@ -6,8 +6,7 @@ im_std = reshape([0.229, 0.224, 0.225], 1, 1, 3) |> gpu
 function load_image(path)
     img = load(path)
     global original_size = size(img)
-    img = imresize(img, (224,224))
-    image_to_arr(img)
+    image_to_arr(imresize(img, (224,224)))
 end
 
 function load_guide_image(path)
@@ -62,10 +61,10 @@ end
 
 # ---------------- Utilities for Calculations on Matrices -------------------
 
-function argmax(x, dims)
-    z = findmax(x, dims) .% size(x, dims)
-    z[z.==0] = size(x, dims)
-    z
+function argmax(A, dims)
+   z = findmax(A, dims)[2] .% size(A, dims) 
+   z[z.==0] .= size(A,dims)
+   z
 end
 
 #-----------------Utilities to apply Deepdream on a Batch--------------------
