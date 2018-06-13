@@ -3,16 +3,17 @@
 im_mean = reshape([0.485, 0.456, 0.406], 1, 1, 3) |> gpu
 im_std = reshape([0.229, 0.224, 0.225], 1, 1, 3) |> gpu
 
-function load_image(path)
+function load_image(path, resize = false)
     img = load(path)
     global original_size = size(img)
-    image_to_arr(imresize(img, (224,224)))
+    if(resize)
+        image_to_arr(imresize(img, (224, 224)))
+    else
+        image_to_arr(img)
+    endS
 end
 
-function load_guide_image(path)
-    img = load(path)
-    image_to_arr(imresize(img, (224,224)))
-end
+load_guide_image(path) = load_image(path, true)
 
 function generate_image(x, resize_original = false)
     x = reshape(x, size(x)[1:3]...)
