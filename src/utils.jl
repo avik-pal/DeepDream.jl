@@ -18,7 +18,7 @@ end
 function generate_image(x)
     x = reshape(x, size(x)[1:3]...)
     x = x .* im_std .+ im_mean
-    x = clamp.(permutedims(x, [3,2,1]), 0, 1)
+    x = clamp.(permutedims(x, [3,2,1]), 0, 1) |> cpu
     imresize(colorview(RGB, x), original_size)
 end
 
