@@ -124,3 +124,71 @@ function guided_step(img, guide, iterations, η, solo_call = false; path = "")
     end
     return input.data
 end
+
+"""
+    recurdream(base_img, iterations, η, octave_scale, num_octaves, num_frames, path, guide = 1.0; s = 0.05)
+
+Iteratively calls the `deepdream` function. Also creates a global array
+`frames` which stores the generated frames.
+
+Arguments:
+1. `base_img`: An array of the image on which to dream.
+2. `iteratons`: Number of iterations. Ideally should be close to 10.
+3. `η`: Learning Rate. Taking a very high η will lead to divergence.
+        Something close to 0.03 is recommended.
+4. `octave_scale`: Amount of zoom to be applied to the base image.
+        Ideally taken to abe around 2.0.
+5. `num_octaves` : Total number of octaves to be generated.
+6. `num_frames`: Total number of frames to be generated
+7. `path`: This is the path where the final image is saved.
+8. `guide`: Pass the guiding image array.
+9. `s`: Zoom scale
+"""
+
+function recurdream(base_img, iterations, η, octave_scale, num_octaves, num_frames, path, guide = 1.0; s = 0.05)
+    global frames = []
+    for i in 1:num_frames
+        path_save = "." * *(split(path, ".")[1:end-1]...) * "_$i." * split(path, ".")[end]
+        base_img = deepdream(base_img, iterations, η, octave_scale, num_octaves, path_save, 1.0)
+        push!(frames, imresize(load(path_save), 256, 256))
+        η /= 1.005
+        info("Image saved at $path_save")
+        base_img = zoom_image(base_img, s, s)        
+    end
+end
+
+"""
+    writevideo(fname; overwrite=true, fps=1, options=``)
+
+Must be called only after the `recurdream` function is called. This generates
+a video using the frames generated. To use this `ffmpeg` must be present on
+the system.
+
+Arguments:
+1. `fname`: Path of the video to be generated.
+
+Other arguments are specific to `ffmpeg`. If a lot of frames are available, the
+fps should be increased to generate better quality videos.
+"""
+
+function writevideo(fname; overwrite=true, fps=1, options=``)
+    ow = overwrite ? `-y` : `-n`
+    nframes = length(frames)
+    h, w = size(frames[1])
+    open(`ffmpeg
+            -loglevel warning
+            $ow
+            -f rawvideo
+            -pix_fmt rgb24
+            -s:v $(h)x$(w)
+            -r $fps
+            -i pipe:0
+            $options
+            -vf "transpose=0"
+            -pix_fmt yuv420p
+            $fname`, "w") do out
+        for i = 1:nframes
+            write(out, frames[i])
+        end
+    end
+end

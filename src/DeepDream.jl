@@ -5,7 +5,7 @@ using CuArrays
 
 export load_image, generate_image, save_image,
 	   load_model, deepdream, dream_batch,
-	   load_guide_image
+	   load_guide_image, writevideo, recurdream
 
 include("utils.jl")
 include("dream.jl")

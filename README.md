@@ -48,6 +48,11 @@ The `guided_step` function might be used independently like the
    directory and call the function `dream_batch` function. Send a
    guiding image if necessary.
 
+6. `recurdream` might be used to generate frames from a given image and
+   using `writevideo` after that generates a video file.
+
+More indepth documentation is available for each and every function.
+
 ## SOME EXAMPLES
 |Original Image|Generated Image|
 |:---:|:---:|
