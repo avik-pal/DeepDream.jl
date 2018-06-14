@@ -153,7 +153,7 @@ function recurdream(base_img, iterations, η, octave_scale, num_octaves, num_fra
         push!(frames, imresize(load(path_save), 256, 256))
         η /= 1.005
         info("Image saved at $path_save")
-        base_img = zoom_image(base_img, s, s)        
+        base_img = zoom_image(base_img, s, s)
     end
 end
 
