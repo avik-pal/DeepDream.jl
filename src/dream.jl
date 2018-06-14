@@ -1,5 +1,23 @@
 # -------------------- Dreaming Utilities --------------------
 
+"""
+    make_step(img, iterations, η, solo_call = false; path = "")
+
+The core function of the deepdream. This is responsible for the forward
+pass of the image through the model and generate the dream. At its core it
+maximizes the `L2 Norm` of the image.
+
+Arguments:
+1. `img`: An array of the image on which to dream.
+2. `iteratons`: Number of iterations. Ideally should be close to 10
+3. `η`: Learning Rate. Taking a very high η will lead to divergence.
+        Something close to 0.03 is recommended.
+4. `solo_call`: Set it to `true` if this function is called indepently.
+5. `path`: Keyword argument which **MUST** be specified if `solo_call`
+           is set to `true`. This is the path where the final image is
+           saved.
+"""
+
 function make_step(img, iterations, η, solo_call = false; path = "")
     if(solo_call && path == "")
         error("Image Save Path must be specified for solo calls")
@@ -16,6 +34,25 @@ function make_step(img, iterations, η, solo_call = false; path = "")
     end
     return input.data
 end
+
+"""
+    deepdream(base_img, iterations, η, octave_scale, num_octaves, path, guide = 1.0)
+
+Iteratively calls the `make_step` or the `guided_step` function depending on the
+arguments. First it generates the `octaves` which are essentially `centre-zoomed`
+parts of the `base_img`.
+
+Arguments:
+1. `base_img`: An array of the image on which to dream.
+2. `iteratons`: Number of iterations. Ideally should be close to 10.
+3. `η`: Learning Rate. Taking a very high η will lead to divergence.
+        Something close to 0.03 is recommended.
+4. `octave_scale`: Amount of zoom to be applied to the base image.
+        Ideally taken to abe around 2.0.
+5. `num_octaves` : Total number of octaves to be generated.
+6. `path`: This is the path where the final image is saved.
+7. `guide`: Pass the guiding image array.
+"""
 
 function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, guide = 1.0)
     octaves = [copy(base_img)]
@@ -41,6 +78,27 @@ function deepdream(base_img, iterations, η, octave_scale, num_octaves, path, gu
     end
     save_image(path, out)
 end
+
+"""
+    guided_step(img, guide, iterations, η, solo_call; path = "")
+
+Core function to generate guided dreams. The `deepdream` function falls back
+to this function to generate the dream using the guide. Internally it calculates
+the similarity between the img feature vector and the guide feature vector by
+computing their dot product and then maximizes the activation corresponding to
+those features.
+
+Arguments:
+1. `img`: An array of the image on which to dream.
+2. `guide`: The guiding image array.
+3. `iteratons`: Number of iterations. Ideally should be close to 10
+4. `η`: Learning Rate. Taking a very high η will lead to divergence.
+        Something close to 0.03 is recommended.
+5. `solo_call`: Set it to `true` if this function is called indepently.
+6. `path`: Keyword argument which **MUST** be specified if `solo_call`
+           is set to `true`. This is the path where the final image is
+           saved.
+"""
 
 function guided_step(img, guide, iterations, η, solo_call = false; path = "")
     if(solo_call && path == "")
