@@ -41,8 +41,6 @@ julia> img = load_image("./examples/sky.jpg")
 julia> load_model(5)
 julia> deepdream(img, 10, 0.005, 1.4, 4, "./examples/sky_dream_guided_new.jpg", guided = true)
 ```
-**NOTE: `load_guide_image` MUST be called before `load_image` otherwise
-the original image will be resized to the size of guide image**
 The `guided_step` function might be used independently like the
 `make_step` function.
 

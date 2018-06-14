@@ -4,7 +4,7 @@ im_mean = reshape([0.485, 0.456, 0.406], 1, 1, 3) |> gpu
 im_std = reshape([0.229, 0.224, 0.225], 1, 1, 3) |> gpu
 
 """
-    load_image(path, resize = false)
+    load_image(path, resize = false; size_save = true)
 
 Load the original image as an array.
 
@@ -14,11 +14,15 @@ Arguments:
              the original image to 224×224. This is recommended when
              using on `cpu`. However, when the image is finally saved
              the original dimensions are restored.
+3. `size_save`: Set it to `false` when the size is not to be stored
+                globally.
 """
 
-function load_image(path, resize = false)
+function load_image(path, resize = false; size_save = true)
     img = load(path)
-    global original_size = size(img)
+    if(size_save)
+        global original_size = size(img)
+    end
     if(resize)
         image_to_arr(imresize(img, (224, 224)))
     else
@@ -40,7 +44,7 @@ Arguments:
            lost while downscaling.
 """
 
-load_guide_image(path) = load_image(path, true)
+load_guide_image(path) = load_image(path, true, size_save = false)
 
 """
     generate_image(x, resize_original = false)
