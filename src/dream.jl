@@ -156,39 +156,3 @@ function recurdream(base_img, iterations, η, octave_scale, num_octaves, num_fra
         base_img = zoom_image(base_img, s, s)
     end
 end
-
-"""
-    writevideo(fname; overwrite=true, fps=1, options=``)
-
-Must be called only after the `recurdream` function is called. This generates
-a video using the frames generated. To use this `ffmpeg` must be present on
-the system.
-
-Arguments:
-1. `fname`: Path of the video to be generated.
-
-Other arguments are specific to `ffmpeg`. If a lot of frames are available, the
-fps should be increased to generate better quality videos.
-"""
-
-function writevideo(fname; overwrite=true, fps=1, options=``)
-    ow = overwrite ? `-y` : `-n`
-    nframes = length(frames)
-    h, w = size(frames[1])
-    open(`ffmpeg
-            -loglevel warning
-            $ow
-            -f rawvideo
-            -pix_fmt rgb24
-            -s:v $(h)x$(w)
-            -r $fps
-            -i pipe:0
-            $options
-            -vf "transpose=0"
-            -pix_fmt yuv420p
-            $fname`, "w") do out
-        for i = 1:nframes
-            write(out, frames[i])
-        end
-    end
-end
