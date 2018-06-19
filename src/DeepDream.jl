@@ -1,3 +1,5 @@
+__precompile__()
+
 module DeepDream
 
 using Flux, Metalhead, Images, FileIO
