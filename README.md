@@ -1,5 +1,9 @@
 # DeepDream
 
+**NOTE : This project was meant for Julia 0.6. So it will fail to work
+with Julia 1.0 and the latest tagged version of Flux. However, an update
+is WIP**
+
 **NOTE : If there is no GPU support available please checkout the cpu
 branch of this repo. The cpu code is not thoroughly tested.**
 
